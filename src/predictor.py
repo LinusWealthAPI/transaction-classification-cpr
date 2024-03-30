@@ -1,4 +1,5 @@
 import joblib
+import src.preprocessor as preprocessor
 
 from google.cloud.aiplatform.prediction.predictor import Predictor
 from google.cloud.aiplatform.utils import prediction_utils
@@ -15,8 +16,8 @@ class CprPredictor(Predictor):
 
     def predict(self, instances):
         print("CUSTOM PREDICTION")
-        predictions = self._model.predict(instances["instances"])
-        probabilities = self._model.predict_proba(instances["instances"])
+        predictions = self._model.predict(instances)
+        probabilities = self._model.predict_proba(instances)
 
         unknown_mask = (probabilities.max(axis=1) < 0.3)
         predictions[unknown_mask] = 'unknown'
@@ -28,3 +29,8 @@ class CprPredictor(Predictor):
         for prediction, probability in zip(pred_list, proba_list):
             classifications.append({"category": prediction, "probability": probability})
         return {"predictions": classifications}
+
+    def preprocess(self, prediction_input):
+        print("CUSTOM PREPROCESS")
+        instances = prediction_input["instances"]
+        return preprocessor.preprocess(instances)
