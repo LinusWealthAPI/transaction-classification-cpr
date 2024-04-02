@@ -1,5 +1,5 @@
 import joblib
-import src.preprocessor as preprocessor
+import preprocessor
 
 from google.cloud.aiplatform.prediction.predictor import Predictor
 from google.cloud.aiplatform.utils import prediction_utils

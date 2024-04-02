@@ -2,7 +2,7 @@ import re
 from pandas import DataFrame
 
 
-def preprocess(self, instances: list | dict | DataFrame):
+def preprocess(instances: list | dict | DataFrame):
     if isinstance(instances, dict | list):
         columns = ['purpose', 'counterpart_name', 'category']
         df = DataFrame(instances, columns=columns)
